@@ -1,26 +1,28 @@
 from matplotlib.animation import FuncAnimation
 import numpy as np
 from matplotlib import pyplot as plt
-import Parameters as P
-def sine_animation():
+import parameters as P
+from mpl_toolkits.mplot3d import Axes3D
 
-    g = P.G*P.earth_mass/(P.orbital_radius**2)
+class gpsAnimation:
+    """
+    Create the GPS Animation
+    """
+    def __init__(self):
+        self.fig = plt.figure()
+        self.ax = fig.gca(projection='3d')
+        self.ax.set_xlim3d(-P.orbital_radius, P.orbital_radius)
+        self.ax.set_ylim3d(-P.orbital_radius, P.orbital_radius)
+        self.ax.set_zlim3d(-P.orbital_radius, P.orbital_radius)
+        self.ax.set_aspect('equal')
 
-    time = np.linspace(0, 200, 20000)
-    x0 = np.array([0, P.orbital_radius])
-    x_dot0 = np.array([-np.sqrt(P.G*P.earth_mass/P.orbital_radius), 0])
-    x = .5*g*time**2
+        self.flag_init = True
 
-    fig = plt.figure()
-    plt.xlim(-2.2, 2.2)
-    plt.ylim(-2.2, 2.2)
+    def update(self, satellites, receivers):
+        [self.draw_satellite(satellite) for satellite in satellites]
 
-    satellite_1, = plt.plot([],[])
+        if self.flag_init:
+            self.flag_init = False
 
-    def update(index):
-
-        satellite_1.set_data(x1[index-2:index], y1[index-2:index])
-        return satellite_1, satellite_2,
-
-    a = FuncAnimation(fig, update, frames=len(x1), interval=10)
-    plt.show()
+    def draw_satellite(self, satellite):
+        

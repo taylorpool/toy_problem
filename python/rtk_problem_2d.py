@@ -64,7 +64,7 @@ class TestRTK_2D(unittest.TestCase):
 if __name__=='__main__':
 
     # Uncomment this line in order to run unit tests
-    unittest.main()
+    # unittest.main()
 
 
     # Plot an example where the calculations are off
